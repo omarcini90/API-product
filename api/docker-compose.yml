@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  # Base de datos MongoDB
+  mongodb:
+    image: mongo:7.0
+    container_name: products_mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: products_db
+    volumes:
+      - mongodb_data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - products_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # API de Productos
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: products_api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://admin:password123@mongodb:27017/products_db?authSource=admin
+      - MONGO_DB_NAME=products_db
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./logs:/app/logs
+      - .:/app
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - products_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # MongoDB Admin Interface (opcional)
+  mongo-express:
+    image: mongo-express:1.0.0
+    container_name: products_mongo_express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password123
+      ME_CONFIG_MONGODB_URL: mongodb://admin:password123@mongodb:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin123
+    depends_on:
+      - mongodb
+    networks:
+      - products_network
+
+# Volúmenes persistentes
+volumes:
+  mongodb_data:
+    driver: local
+
+# Red personalizada
+networks:
+  products_network:
+    driver: bridge

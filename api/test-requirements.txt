@@ -1,0 +1,21 @@
+# Dependencias básicas de testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+httpx>=0.24.0
+pytest-mock>=3.11.0
+faker>=19.0.0  # Para generar datos de prueba realistas
+factory-boy>=3.3.0  # Para crear objetos de prueba
+freezegun>=1.2.0  # Para mockear fechas/tiempo
+
+# Coverage y reporting
+coverage>=7.2.0
+pytest-benchmark>=4.0.0  # Para pruebas de rendimiento
+
+# Linting y formato (opcional para CI/CD)
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.4.0
+
+# Herramientas de debugging
+pytest-pdb>=0.2.0
+pytest-clarity>=1.0.1

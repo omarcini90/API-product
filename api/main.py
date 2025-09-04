@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 import sys
 import os
+import yaml
 from loguru import logger
 
 # Agregar el directorio actual al path para los imports
@@ -18,41 +19,71 @@ from config.database import get_mongo_client
 # Configurar logging
 logger.add("app.log", rotation="500 MB", level=settings.LOG_LEVEL)
 
+# Cargar especificación OpenAPI desde archivo YAML
+def load_openapi_spec():
+    """Carga la especificación OpenAPI desde el archivo YAML."""
+    try:
+        with open("openapi.yaml", "r", encoding="utf-8") as file:
+            return yaml.safe_load(file)
+    except FileNotFoundError:
+        logger.warning("Archivo openapi.yaml no encontrado, usando especificación por defecto")
+        return None
+    except Exception as e:
+        logger.error(f"Error al cargar openapi.yaml: {e}")
+        return None
+
 # Crear la aplicación FastAPI
 app = FastAPI(
-    title="MELI Test - Products API",
+    title="API de Productos - Comparador",
     description="""
-    API para gestión de productos con las siguientes funcionalidades:
+    API REST para gestionar y comparar productos con FastAPI, MongoDB y Docker.
     
-    ## Características Principales
-    * **Listar productos** con filtros opcionales (marca, categoría, precio)
-    * **Obtener detalles** de productos individuales
-    * **Comparar productos** por IDs
-    * **Crear y actualizar** productos (CRUD completo)
-    * **Paginación** usando estándares de FastAPI
+    ## Características principales:
+    - CRUD completo de productos
+    - Comparación inteligente de productos
+    - Validación automática de datos
+    - Documentación interactiva
+    - Containerización con Docker
     
-    ## Filtros Disponibles
-    * Filtrar por marca y categoría
-    * Rango de precios (mínimo y máximo)
-    * Ordenamiento por precio, nombre o marca
-    * Paginación con skip/limit
+    ## Funcionalidades:
+    * **Listar productos** - Obtener todos los productos disponibles
+    * **Obtener detalles** - Información completa de un producto específico
+    * **Crear productos** - Agregar nuevos productos a la base de datos
+    * **Comparar productos** - Análisis comparativo de múltiples productos
+    * **Filtrar por categoría** - Productos agrupados por tipo
     
-    ## Endpoints Principales
-    * `GET /api/products/` - Listar productos con filtros
-    * `GET /api/products/{id}` - Detalles de producto
-    * `POST /api/products/compare` - Comparar productos
-    * `GET /api/products/list/` - Lista paginada simple
-    * `GET /api/products/paginated/` - Lista paginada con metadata
+    ## Comparación de productos:
+    La funcionalidad de comparación incluye:
+    - Producto más barato y más caro
+    - Producto con mejor calificación
+    - Marcas disponibles
+    - Rango de precios
+    
+    ## Tecnologías:
+    - FastAPI 0.104+ para la API REST
+    - MongoDB 7.0 para almacenamiento
+    - Pydantic para validación de datos
+    - Docker para containerización
     """,
     version="1.0.0",
-    contact={
-        "name": "MELI Test API",
-        "email": "developer@example.com",
-    },
     license_info={
         "name": "MIT",
-    }
+        "url": "https://opensource.org/licenses/MIT",
+    },
+    servers=[
+        {
+            "url": "http://localhost:8000",
+            "description": "Servidor de desarrollo local"
+        }
+    ]
 )
+
+# Cargar especificación OpenAPI personalizada
+openapi_spec = load_openapi_spec()
+if openapi_spec:
+    # Sobrescribir la especificación OpenAPI generada automáticamente
+    app.openapi_schema = openapi_spec
+    logger.info("Especificación OpenAPI cargada desde openapi.yaml")
 
 # Configuración de CORS
 app.add_middleware(

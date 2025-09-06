@@ -5,37 +5,43 @@ from opentelemetry import trace
 from pymongo import MongoClient
 from config.core import settings
 
-# MongoDB utility functions
 
 def get_mongo_client():
     """
     Get a MongoDB client instance.
+    
+    Returns:
+        MongoDB client
     """
     try:
-        # Check if MONGO_URI is configured
         if not settings.MONGO_URI:
             raise Exception("MONGO_URI environment variable is not set. Please configure it in your .env file.")
         
-        # If the URI does not specify authSource, add it for admin DB authentication
         uri = settings.MONGO_URI
         if 'authSource' not in uri:
             if '?' in uri:
                 uri += '&authSource=admin'
             else:
                 uri += '?authSource=admin'
-        # Use only the URI for authentication (credentials and authSource in URI)
-        client = MongoClient(uri, serverSelectionTimeoutMS=5000)
         
-        # Test the connection
+        client = MongoClient(uri, serverSelectionTimeoutMS=5000)
         client.admin.command('ping')
         
         return client
     except Exception as e:
         raise Exception(f"Could not connect to MongoDB: {e}")
     
+
 def insert_document(collection_name, document):
     """
     Insert a document into a specified MongoDB collection.
+    
+    Args:
+        collection_name: Name of the collection
+        document: Document to insert
+        
+    Returns:
+        Inserted document ID as string
     """
     client = None
     try:
@@ -50,9 +56,17 @@ def insert_document(collection_name, document):
         if client:
             client.close()
 
+
 def find_documents(collection_name, query):
     """
     Find documents in a specified MongoDB collection based on a query.
+    
+    Args:
+        collection_name: Name of the collection
+        query: Query to filter documents
+        
+    Returns:
+        List of documents matching the query
     """
     client = None
     try:
@@ -67,9 +81,18 @@ def find_documents(collection_name, query):
         if client:
             client.close()
     
+
 def update_document(collection_name, query, update):
     """
     Update documents in a specified MongoDB collection based on a query.
+    
+    Args:
+        collection_name: Name of the collection
+        query: Query to filter documents
+        update: Update operations to apply
+        
+    Returns:
+        Number of modified documents
     """
     client = None
     try:
@@ -83,6 +106,7 @@ def update_document(collection_name, query, update):
     finally:
         if client:
             client.close()
+
 
 def get_collection(collection_name: str):
     """

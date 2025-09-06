@@ -8,3 +8,51 @@
 2025-09-04 09:50:58.277 | INFO     | __main__:start_server:144 - 🔧 Configurando servidor...
 2025-09-04 23:27:07.603 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
 2025-09-04 23:29:40.049 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:36:01.711 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:41:19.536 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:43:11.462 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:43:40.185 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:50:05.554 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:51:35.136 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:52:21.241 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:52:42.424 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:52:49.748 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:54:23.873 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:54:24.091 | ERROR    | main:internal_error_handler:160 - Error interno del servidor: 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': '64f1a2b3c4d5e6f7a8b9c0d3', 'url': 'https://errors.pydantic.dev/2.5/v/model_attributes_type'}
+
+2025-09-05 16:54:59.177 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:54:59.404 | ERROR    | main:internal_error_handler:160 - Error interno del servidor: 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': '64f1a2b3c4d5e6f7a8b9c0d3', 'url': 'https://errors.pydantic.dev/2.5/v/model_attributes_type'}
+
+2025-09-05 16:59:14.336 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:59:14.561 | ERROR    | main:internal_error_handler:160 - Error interno del servidor: 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': '64f1a2b3c4d5e6f7a8b9c0d3', 'url': 'https://errors.pydantic.dev/2.5/v/model_attributes_type'}
+
+2025-09-05 16:59:30.807 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 16:59:31.017 | ERROR    | main:internal_error_handler:160 - Error interno del servidor: 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': '64f1a2b3c4d5e6f7a8b9c0d3', 'url': 'https://errors.pydantic.dev/2.5/v/model_attributes_type'}
+
+2025-09-05 17:00:30.765 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 17:00:30.985 | ERROR    | main:internal_error_handler:160 - Error interno del servidor: 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': '64f1a2b3c4d5e6f7a8b9c0d3', 'url': 'https://errors.pydantic.dev/2.5/v/model_attributes_type'}
+
+2025-09-05 17:01:16.074 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 17:01:23.940 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 17:01:40.521 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 17:04:18.927 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 17:04:36.869 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 17:05:22.723 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-05 17:05:22.911 | ERROR    | main:internal_error_handler:160 - Error interno del servidor: 1 validation errors:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': '64f1a2b3c4d5e6f7a8b9c0d3', 'url': 'https://errors.pydantic.dev/2.5/v/model_attributes_type'}
+
+2025-09-06 17:28:53.314 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-06 17:29:03.828 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-06 17:29:05.014 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-06 17:29:05.735 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-06 17:29:06.406 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-06 17:29:07.582 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-06 17:29:32.832 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-06 17:31:55.286 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-06 17:32:01.225 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml
+2025-09-06 17:33:32.841 | INFO     | main:<module>:86 - Especificación OpenAPI cargada desde openapi.yaml

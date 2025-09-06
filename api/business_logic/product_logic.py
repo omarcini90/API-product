@@ -8,7 +8,7 @@ def list_products() -> List[ProductDetail]:
     Obtiene todos los productos disponibles.
     
     Returns:
-        Lista de productos
+        List[ProductDetail]: Lista de productos
     """
     try:
         products = get_products()
@@ -25,7 +25,7 @@ def get_product_details(product_id: str) -> Optional[ProductDetail]:
         product_id: ID del producto
         
     Returns:
-        Detalles del producto o None si no existe
+        Optional[ProductDetail]: Detalles del producto o None si no existe
     """
     if not product_id:
         raise ValueError("ID de producto requerido")
@@ -45,22 +45,16 @@ def compare_products(compare_request: ProductCompareRequest) -> ProductCompareRe
         compare_request: Request con IDs de productos a comparar
         
     Returns:
-        Respuesta con productos comparados y resumen
-        
-    Raises:
-        ValueError: Si hay menos de 2 productos o más de 5
-        Exception: Si algún producto no existe
+        ProductCompareResponse: Respuesta con productos comparados y resumen
     """
     product_ids = compare_request.product_ids
     
-    # Validación básica
     if len(product_ids) < 2:
         raise ValueError("Se requieren al menos 2 productos para comparar")
     if len(product_ids) > 5:
         raise ValueError("Se pueden comparar máximo 5 productos")
     
     try:
-        # Obtener productos
         products = []
         not_found = []
         
@@ -71,11 +65,9 @@ def compare_products(compare_request: ProductCompareRequest) -> ProductCompareRe
             else:
                 not_found.append(product_id)
         
-        # Verificar que se encontraron todos los productos
         if not_found:
             raise Exception(f"Productos no encontrados: {', '.join(not_found)}")
         
-        # Generar resumen de comparación
         comparison_summary = _generate_comparison_summary(products)
         
         return ProductCompareResponse(
@@ -96,21 +88,18 @@ def _generate_comparison_summary(products: List[ProductDetail]) -> Dict[str, str
         products: Lista de productos a comparar
         
     Returns:
-        Diccionario con resumen de comparación
+        Dict[str, str]: Diccionario con resumen de comparación
     """
     if not products:
         return {}
     
-    # Encontrar el más barato y más caro
     cheapest = min(products, key=lambda p: p.price)
     most_expensive = max(products, key=lambda p: p.price)
     
-    # Encontrar el mejor calificado (si tienen rating)
     best_rated = None
     if any(p.rating for p in products if p.rating):
         best_rated = max([p for p in products if p.rating], key=lambda p: p.rating)
     
-    # Generar resumen
     summary = {
         "total_products": str(len(products)),
         "cheapest_product": f"{cheapest.name} - ${cheapest.price}",
@@ -121,7 +110,6 @@ def _generate_comparison_summary(products: List[ProductDetail]) -> Dict[str, str
     if best_rated:
         summary["best_rated"] = f"{best_rated.name} - {best_rated.rating}/5"
     
-    # Marcas disponibles
     brands = list(set(p.brand for p in products))
     summary["brands_compared"] = ", ".join(brands)
     
@@ -136,13 +124,8 @@ def create_product_logic(product_request: dict) -> ProductDetail:
         product_request: Datos del producto a crear
         
     Returns:
-        Producto creado
-        
-    Raises:
-        ValueError: Si los datos son inválidos
-        Exception: Si hay error al crear el producto
+        ProductDetail: Producto creado
     """
-    # Validaciones básicas
     if not product_request.get("name"):
         raise ValueError("El nombre del producto es requerido")
     
@@ -156,7 +139,6 @@ def create_product_logic(product_request: dict) -> ProductDetail:
         raise ValueError("La categoría del producto es requerida")
     
     try:
-        # Crear el producto en la base de datos
         created_product = create_product(product_request)
         return created_product
     except Exception as e:

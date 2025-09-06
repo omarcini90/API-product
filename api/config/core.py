@@ -3,12 +3,10 @@ import json
 from types import SimpleNamespace
 from dotenv import load_dotenv
 
-# Cargar las variables de entorno desde el archivo .env
 load_dotenv()
 
-# Validate required environment variables
 mongo_uri = os.getenv("MONGO_URI")
-mongo_db_name = os.getenv("MONGO_DB_NAME", "meli_test")  # Default database name
+mongo_db_name = os.getenv("MONGO_DB_NAME", "meli_test")
 
 if not mongo_uri:
     print("WARNING: MONGO_URI environment variable is not set. Please create a .env file with the required configuration.")

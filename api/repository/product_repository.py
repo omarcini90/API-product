@@ -9,16 +9,14 @@ def get_products() -> List[ProductDetail]:
     Obtiene todos los productos de la base de datos.
     
     Returns:
-        Lista de productos
+        List[ProductDetail]: Lista de productos
     """
     try:
         collection = get_collection("products")
         documents = list(collection.find())
         
-        # Convertir documentos de MongoDB a modelos Pydantic
         products = []
         for doc in documents:
-            # Convertir ObjectId a string
             if '_id' in doc:
                 doc['id'] = str(doc['_id'])
                 del doc['_id']
@@ -37,14 +35,12 @@ def get_product_by_id(product_id: str) -> Optional[ProductDetail]:
         product_id: ID del producto (string)
         
     Returns:
-        Producto encontrado o None si no existe
+        Optional[ProductDetail]: Producto encontrado o None si no existe
     """
     try:
-        # Validar y convertir el ID a ObjectId
         try:
             obj_id = ObjectId(product_id)
         except Exception:
-            # ID inválido, retornar None
             return None
         
         collection = get_collection("products")
@@ -53,7 +49,6 @@ def get_product_by_id(product_id: str) -> Optional[ProductDetail]:
         if not document:
             return None
         
-        # Convertir ObjectId a string
         document['id'] = str(document['_id'])
         del document['_id']
         
@@ -71,18 +66,14 @@ def create_product(product_data: dict) -> ProductDetail:
         product_data: Datos del producto
         
     Returns:
-        Producto creado
+        ProductDetail: Producto creado
     """
     try:
         collection = get_collection("products")
         
-        # Insertar documento
         result = collection.insert_one(product_data)
-        
-        # Obtener el producto creado
         created_product = collection.find_one({"_id": result.inserted_id})
         
-        # Convertir ObjectId a string
         created_product['id'] = str(created_product['_id'])
         del created_product['_id']
         
@@ -92,11 +83,12 @@ def create_product(product_data: dict) -> ProductDetail:
         raise Exception(f"Error al crear producto: {str(e)}")
 
 
-# Función helper para datos de prueba
 def create_sample_products():
     """
     Crea productos de ejemplo en la base de datos.
-    Útil para testing y desarrollo.
+    
+    Returns:
+        None
     """
     sample_products = [
         {
@@ -151,7 +143,6 @@ def create_sample_products():
     
     try:
         collection = get_collection("products")
-        # Verificar si ya existen productos
         if collection.count_documents({}) == 0:
             collection.insert_many(sample_products)
             print("Productos de ejemplo creados exitosamente")
